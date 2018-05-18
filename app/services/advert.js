@@ -36,7 +36,7 @@
                 params.type = type
 
                 return $http({
-                    url: apiUrl + '/ads',
+                    url: apiUrl + '/adverts',
                     method: 'GET',
                     params: params,
                     headers: headers
