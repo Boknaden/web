@@ -1,18 +1,17 @@
-(function () {
-    'use strict';
+import angular from 'angular'
 
-    angular
-        .module('boknaden')
-        .controller('MyCurriculumCtrl', [
-            '$scope',
-            '$location',
-            'growl',
-            'AuthService',
-            MyCurriculumCtrl
-        ])
+'use strict'
 
-    function MyCurriculumCtrl ($scope, $location, growl, AuthService) {
+let app = angular.module('boknaden')
 
-    }
+function MyCurriculumCtrl ($scope, $location, growl, AuthService) {
 
-})();
+}
+
+export default app.controller('MyCurriculumCtrl', [
+    '$scope',
+    '$location',
+    'growl',
+    'AuthService',
+    MyCurriculumCtrl
+])

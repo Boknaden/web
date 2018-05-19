@@ -1,50 +1,47 @@
-(function() {
+import angular from 'angular'
 
-    'use strict'
+'use strict'
 
-    angular
-        .module('boknaden')
-        .service('ProfileService', [
-            'apiUrl',
-            '$http',
-            'AuthService',
-            ProfileService
-        ])
+let app = angular.module('boknaden')
 
-    function ProfileService(apiUrl, $http, AuthService) {
-        this.get = getProfileData
-        this.update = updateProfileData
+function ProfileService(apiUrl, $http, AuthService) {
+    this.get = getProfileData
+    this.update = updateProfileData
 
-        function getProfileData () {
-            var headers = {}
+    function getProfileData () {
+        var headers = {}
 
-            if (AuthService.isAuthenticated) {
-                headers['boknaden-verify'] = AuthService.token()
-            }
-
-            return $http({
-                url: apiUrl + '/profile',
-                method: 'GET',
-                headers: headers
-            })
+        if (AuthService.isAuthenticated) {
+            headers['boknaden-verify'] = AuthService.token()
         }
 
-        function updateProfileData (profile) {
-            var profile = profile,
-                headers = {}
-
-            if (AuthService.isAuthenticated) {
-                headers['boknaden-verify'] = AuthService.token()
-            }
-
-            return $http({
-                url: apiUrl + '/profile',
-                method: 'PUT',
-                headers: headers,
-                data: profile
-            })
-        }
+        return $http({
+            url: apiUrl + '/profile',
+            method: 'GET',
+            headers: headers
+        })
     }
 
+    function updateProfileData (profile) {
+        var profile = profile,
+            headers = {}
 
-})()
+        if (AuthService.isAuthenticated) {
+            headers['boknaden-verify'] = AuthService.token()
+        }
+
+        return $http({
+            url: apiUrl + '/profile',
+            method: 'PUT',
+            headers: headers,
+            data: profile
+        })
+    }
+}
+
+export default app.service('ProfileService', [
+    'apiUrl',
+    '$http',
+    'AuthService',
+    ProfileService
+])

@@ -1,59 +1,56 @@
-(function() {
+import angular from 'angular'
 
-    'use strict'
+'use strict'
 
-    angular
-        .module('boknaden')
-        .service('InterestService', [
-            'apiUrl',
-            '$http',
-            'AuthService',
-            InterestService
-        ])
+let app = angular.module('boknaden')
 
-    function InterestService(apiUrl, $http, AuthService) {
-        this.get = getInterests
-        this.newInterest = newInterest
+function InterestService(apiUrl, $http, AuthService) {
+    this.get = getInterests
+    this.newInterest = newInterest
 
-        function getInterests (type) {
-            var headers = {},
-                params = {}
+    function getInterests (type) {
+        var headers = {},
+            params = {}
 
-            type = type || null
+        type = type || null
 
-            if (AuthService.isAuthenticated()) {
-                headers['boknaden-verify'] = AuthService.token()
-            }
-
-            if (type) {
-                params['type'] = type
-            }
-
-            return $http({
-                url: apiUrl + '/interest',
-                method: 'GET',
-                params: params,
-                headers: headers
-            })
+        if (AuthService.isAuthenticated()) {
+            headers['boknaden-verify'] = AuthService.token()
         }
 
-        function newInterest (data, message) {
-            var data    = data || [],
-                message = message || 'Jeg ønsker disse objektene.',
-                headers = {}
-
-            if (AuthService.isAuthenticated()) {
-                headers['boknaden-verify'] = AuthService.token()
-            }
-
-            return $http({
-                url: apiUrl + '/interest',
-                method: 'POST',
-                data: { aditems: data, message: message },
-                headers: headers,
-            })
+        if (type) {
+            params['type'] = type
         }
+
+        return $http({
+            url: apiUrl + '/interest',
+            method: 'GET',
+            params: params,
+            headers: headers
+        })
     }
 
+    function newInterest (data, message) {
+        var data    = data || [],
+            message = message || 'Jeg ønsker disse objektene.',
+            headers = {}
 
-})()
+        if (AuthService.isAuthenticated()) {
+            headers['boknaden-verify'] = AuthService.token()
+        }
+
+        return $http({
+            url: apiUrl + '/interest',
+            method: 'POST',
+            data: { aditems: data, message: message },
+            headers: headers,
+        })
+    }
+}
+
+export default app.service('InterestService', [
+    'apiUrl',
+    '$http',
+    'AuthService',
+    InterestService
+])

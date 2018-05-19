@@ -1,44 +1,44 @@
-(function () {
-    'use strict'
+import angular from 'angular'
 
-    var app = angular.module('boknaden')
+'use strict'
 
-    app.directive('passwordVerify', [passwordVerify])
+var app = angular.module('boknaden')
 
-    function passwordVerify () {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            scope: {
-              passwordVerify: '='
-            },
-            link: function (scope, element, attrs, ctrl) {
+function passwordVerify () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: {
+          passwordVerify: '='
+        },
+        link: function (scope, element, attrs, ctrl) {
 
-                scope.$watch(function () {
-                    var combined
-                    if (scope.passwordVerify || ctrl.$viewValue) {
-                        combined = scope.passwordVerify + '_' + ctrl.$viewValue
-                    }
+            scope.$watch(function () {
+                var combined
+                if (scope.passwordVerify || ctrl.$viewValue) {
+                    combined = scope.passwordVerify + '_' + ctrl.$viewValue
+                }
 
-                    return combined
+                return combined
 
-                }, function (value) {
+            }, function (value) {
 
-                    if (value) {
-                        ctrl.$parsers.unshift(function (viewValue) {
-                            var origin = scope.passwordVerify
+                if (value) {
+                    ctrl.$parsers.unshift(function (viewValue) {
+                        var origin = scope.passwordVerify
 
-                            if (origin !== viewValue) {
-                                ctrl.$setValidity("passwordVerify", false)
-                                return undefined
-                            } else {
-                                ctrl.$setValidity("passwordVerify", true)
-                                return viewValue
-                            }
-                        })
-                    }
-                })
-            }
+                        if (origin !== viewValue) {
+                            ctrl.$setValidity("passwordVerify", false)
+                            return undefined
+                        } else {
+                            ctrl.$setValidity("passwordVerify", true)
+                            return viewValue
+                        }
+                    })
+                }
+            })
         }
     }
-})()
+}
+
+export default app.directive('passwordVerify', [passwordVerify])

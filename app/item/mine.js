@@ -1,57 +1,56 @@
-(function () {
-    'use strict';
+import angular from 'angular'
 
-    angular
-        .module('boknaden')
-        .controller('MyAdsCtrl', [
-            '$scope',
-            'store',
-            '$location',
-            'growl',
-            'AdService',
-            'AuthService',
-            MyAdsCtrl
-        ])
+'use strict'
 
-    function MyAdsCtrl ($scope, store, $location, growl, AdService, AuthService) {
-        if (!AuthService.isAuthenticated()) {
-            $location.go('/store')
-        }
+let app = angular.module('boknaden')
 
-        reload()
-
-        $scope.flyers = []
-        $scope.activeFlyer = $location.search().active || null
-        $scope.showSpinner = true
-
-        $scope.deleteAd = function (adid) {
-            AdService.deleteAd(adid).then(function (res) {
-                reload()
-            }, function (err) {
-                console.log(err)
-                growl.error("Det skjedde en feil under slettingen.", {title: "Sletting feilet"})
-            })
-        }
-
-        $scope.go = function (path) {
-            $location.path(path)
-        }
-
-        function setActiveAdItem (flyer, aditem) {
-            flyer.selectedAdItem.adItem = aditem
-        }
-
-        function reload () {
-            $scope.showSpinner = true
-
-            AdService.getAdsForUser().then(function (res) {
-                $scope.showSpinner = false
-                $scope.flyers = res.data.ads
-            }, function (err) {
-                growl.error(err, {title: 'Error'})
-            })
-        }
-
+function MyAdsCtrl ($scope, store, $location, growl, AdService, AuthService) {
+    if (!AuthService.isAuthenticated()) {
+        $location.go('/store')
     }
 
-})();
+    reload()
+
+    $scope.flyers = []
+    $scope.activeFlyer = $location.search().active || null
+    $scope.showSpinner = true
+
+    $scope.deleteAd = function (adid) {
+        AdService.deleteAd(adid).then(function (res) {
+            reload()
+        }, function (err) {
+            console.log(err)
+            growl.error("Det skjedde en feil under slettingen.", {title: "Sletting feilet"})
+        })
+    }
+
+    $scope.go = function (path) {
+        $location.path(path)
+    }
+
+    function setActiveAdItem (flyer, aditem) {
+        flyer.selectedAdItem.adItem = aditem
+    }
+
+    function reload () {
+        $scope.showSpinner = true
+
+        AdService.getAdsForUser().then(function (res) {
+            $scope.showSpinner = false
+            $scope.flyers = res.data.ads
+        }, function (err) {
+            growl.error(err, {title: 'Error'})
+        })
+    }
+
+}
+
+export default app.controller('MyAdsCtrl', [
+    '$scope',
+    'store',
+    '$location',
+    'growl',
+    'AdService',
+    'AuthService',
+    MyAdsCtrl
+])

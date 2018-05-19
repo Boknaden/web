@@ -1,18 +1,17 @@
-(function () {
-    'use strict';
+import angular from 'angular'
 
-    var app = angular.module('boknaden')
+'use strict';
 
-    app.directive('bnNavigation', [bnNavigation])
+var app = angular.module('boknaden')
 
-    function bnNavigation () {
-        return {
-            restrict: 'A',
-            templateUrl: 'app/components/navigation/navigation.html',
-            link: function (scope, element, attrs) {
-                $scope.show = false
-            }
+function bnNavigation () {
+    return {
+        restrict: 'A',
+        templateUrl: 'app/components/navigation/navigation.html',
+        link: function (scope, element, attrs) {
+            $scope.show = false
         }
     }
+}
 
-})();
+export default app.directive('bnNavigation', [bnNavigation])

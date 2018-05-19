@@ -1,38 +1,37 @@
-(function () {
-    'use strict';
+import angular from 'angular'
 
-    angular
-        .module('boknaden')
-        .controller('ForgotPasswordCtrl', [
-            '$scope',
-            'store',
-            '$location',
-            '$timeout',
-            'growl',
-            'UserService',
-            ForgotPasswordCtrl
-        ])
+'use strict'
 
-    function ForgotPasswordCtrl ($scope, store, $location, $timeout, growl, UserService) {
-        $scope.username = ''
-        $scope.sentConfirmation = false
+let app = angular.module('boknaden')
 
-        $scope.go = function (path) {
-            $location.path(path)
-        }
+function ForgotPasswordCtrl ($scope, store, $location, $timeout, growl, UserService) {
+    $scope.username = ''
+    $scope.sentConfirmation = false
 
-        $scope.doForgotPassword = function () {
-            if ($scope.username.length > 0) {
-                UserService.forgotPassword($scope.username).then(function (res) {
-                    $scope.sentConfirmation = true
-                    $scope.username = ''
-                    $timeout(() => {
-                        $location.path('/login')
-                    }, 2500)
-                })
-
-            }
-        }
+    $scope.go = function (path) {
+        $location.path(path)
     }
 
-})();
+    $scope.doForgotPassword = function () {
+        if ($scope.username.length > 0) {
+            UserService.forgotPassword($scope.username).then(function (res) {
+                $scope.sentConfirmation = true
+                $scope.username = ''
+                $timeout(() => {
+                    $location.path('/login')
+                }, 2500)
+            })
+
+        }
+    }
+}
+
+export default app.controller('ForgotPasswordCtrl', [
+    '$scope',
+    'store',
+    '$location',
+    '$timeout',
+    'growl',
+    'UserService',
+    ForgotPasswordCtrl
+])

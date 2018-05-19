@@ -1,21 +1,20 @@
-(function () {
-    'use strict';
+import angular from 'angular'
 
-    var app = angular.module('boknaden')
+'use strict';
 
-    app.directive('bnMyItems', [bnMyItems])
+var app = angular.module('boknaden')
 
-    function bnMyItems () {
-        return {
-            restrict: 'A',
-            templateUrl: 'app/components/bookstore/my-items/myitems.html',
-            scope: {
-                'items': '='
-            },
-            link: function (scope) {
+function bnMyItems () {
+    return {
+        restrict: 'A',
+        templateUrl: 'app/components/bookstore/my-items/myitems.html',
+        scope: {
+            'items': '='
+        },
+        link: function (scope) {
 
-            }
         }
     }
+}
 
-})();
+export default app.directive('bnMyItems', [bnMyItems])

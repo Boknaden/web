@@ -1,34 +1,31 @@
-(function() {
+import angular from 'angular'
 
-    'use strict'
+'use strict'
 
-    angular
-        .module('boknaden')
-        .service('ChatsService', [
-            'apiUrl',
-            '$http',
-            'AuthService',
-            ChatsService
-        ])
+let app = angular.module('boknaden')
 
-    function ChatsService (apiUrl, $http, AuthService) {
-        this.getAllChats = getAllChats
+function ChatsService (apiUrl, $http, AuthService) {
+    this.getAllChats = getAllChats
 
-        function getAllChats (page) {
-            var params = {
-                    page: page
-                }
+    function getAllChats (page) {
+        var params = {
+                page: page
+            }
 
-            return $http({
-                url: apiUrl + '/chats',
-                method: 'GET',
-                params: params,
-                headers: {
-                    'boknaden-verify': AuthService.token()
-                }
-            })
-        }
+        return $http({
+            url: apiUrl + '/chats',
+            method: 'GET',
+            params: params,
+            headers: {
+                'boknaden-verify': AuthService.token()
+            }
+        })
     }
+}
 
-
-})()
+export default app.service('ChatsService', [
+    'apiUrl',
+    '$http',
+    'AuthService',
+    ChatsService
+])

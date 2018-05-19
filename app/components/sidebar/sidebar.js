@@ -1,21 +1,19 @@
-(function () {
-    'use strict';
+import angular from 'angular'
 
-    var app = angular.module('boknaden')
+'use strict';
 
-    app.directive('bnSidebar', [bnSidebar])
+var app = angular.module('boknaden')
 
-    function bnSidebar () {
-        return {
-            restrict: 'A',
-            templateUrl: 'app/components/sidebar/sidebar.html',
-            controller: bnSidebarCtrl,
-        }
+function bnSidebar () {
+    return {
+        restrict: 'A',
+        templateUrl: 'app/components/sidebar/sidebar.html',
+        controller: bnSidebarCtrl,
     }
+}
 
-    function bnSidebarCtrl ($scope) {
-        $scope.show = false
+function bnSidebarCtrl ($scope) {
+    $scope.show = false
+}
 
-    }
-
-})();
+export default app.directive('bnSidebar', [bnSidebar])

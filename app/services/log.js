@@ -1,39 +1,36 @@
-(function() {
+import angular from 'angular'
 
-    'use strict'
+'use strict'
 
-    angular
-        .module('boknaden')
-        .service('LogService', [
-            'apiUrl',
-            '$http',
-            'store',
-            'AuthService',
-            LogService
-        ])
+let app = angular.module('boknaden')
 
-    function LogService (apiUrl, $http, store, AuthService) {
-        this.getAll = getAll
+function LogService (apiUrl, $http, store, AuthService) {
+    this.getAll = getAll
 
-        function getAll (page, type) {
-            var params = {
-                page: page
-            }
-
-            if (type) {
-                params['type'] = type
-            }
-
-            return $http({
-                url: apiUrl + '/logs',
-                method: 'GET',
-                params: params,
-                headers: {
-                    'boknaden-verify': AuthService.token()
-                }
-            })
+    function getAll (page, type) {
+        var params = {
+            page: page
         }
+
+        if (type) {
+            params['type'] = type
+        }
+
+        return $http({
+            url: apiUrl + '/logs',
+            method: 'GET',
+            params: params,
+            headers: {
+                'boknaden-verify': AuthService.token()
+            }
+        })
     }
+}
 
-
-})()
+ export default app.service('LogService', [
+    'apiUrl',
+    '$http',
+    'store',
+    'AuthService',
+    LogService
+])

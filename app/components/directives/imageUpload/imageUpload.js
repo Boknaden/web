@@ -1,35 +1,35 @@
-(function () {
-    'use strict'
+import angular from 'angular'
 
-    var app = angular.module('boknaden')
+'use strict'
 
-    app.directive('bnImageUpload', [
-        'ImageService',
-        bnImageUpload
-    ])
+var app = angular.module('boknaden')
 
-    function bnImageUpload (ImageService) {
-        return {
-            restrict: 'A',
-            scope: {
-                file: '=',
-                spinner: '=',
-            },
-            link: function (scope, el, attrs, ctrl) {
-                el.bind('change', function (event) {
-                    var image = event.target.files[0]
-                    scope.spinner = true;
-                    ImageService.new(image).then(function (response) {
-                        scope.file = {
-                            imageurl: response.data.imageurl,
-                            imageid: response.data.imageid
-                        }
-                        scope.$apply()
-                        scope.spinner = false
-                    })
+function bnImageUpload (ImageService) {
+    return {
+        restrict: 'A',
+        scope: {
+            file: '=',
+            spinner: '=',
+        },
+        link: function (scope, el, attrs, ctrl) {
+            el.bind('change', function (event) {
+                var image = event.target.files[0]
+                scope.spinner = true;
+                ImageService.new(image).then(function (response) {
+                    scope.file = {
+                        imageurl: response.data.imageurl,
+                        imageid: response.data.imageid
+                    }
+                    scope.$apply()
+                    scope.spinner = false
                 })
-            }
-
+            })
         }
+
     }
-})()
+}
+
+export default app.directive('bnImageUpload', [
+    'ImageService',
+    bnImageUpload
+])
